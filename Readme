@@ -1,0 +1,91 @@
+Aufgabe 01:
+
+a + a(a + b)*a
+
+Das bedeutet:
+Die Sprache enthält alle Wörter, die entweder
+
+nur aus einem einzelnen „a“ bestehen, oder mit „a“ beginnen, dann eine beliebige Folge aus a und b (auch leer) enthalten und wieder mit „a“ enden.
+Beispiele: a, aa, aba, abba, aaaa, aabbaa ......
+-----------------------------------------------------------------------------------------------------
+
+Aufgabe 03:
+Python
+In Python kann man Gleitkommazahlen mit oder ohne Nachkommastellen schreiben zum Beispiel 1.2 oder .5 oder 3e8 Das e steht für Exponent also 3 mal 10 hoch 8
+
+Regex
+^((\d(?:?\d)*)?.(\d(?:?\d))|(\d(?:_?\d)).)([eE][+-]?\d(?:?\d)*)?$|^\d(?:?\d)[eE][+-]?\d(?:_?\d)$
+Dieser Ausdruck beschreibt Zahlen mit Punkt und optionalem e oder E und erlaubt Unterstriche in Zahlen
+
+DFA
+Der Automat hat Zustände für Zahl Punkt Nachkomma und Exponent Wenn er die ganze Zahl richtig liest endet er in einem akzeptierenden Zustand
+
+Grammatik
+S→I | .D
+I→Z  (A | .D | E)
+D→Z  (D | E | ε)
+E→  (e | E) (+ | - | ε) Z (D | ε)
+Sie zeigt wie eine Zahl aufgebaut ist zum Beispiel aus Ziffern einem Punkt und eventuell einem Exponententeil
+
+Beispiele
+.5 und 1.20e-3 sind gültig
+
+Java
+In Java gibt es Dezimalzahlen wie in Python aber auch Hexadezimalzahlen mit 0x am Anfang zum Beispiel 0x1.fp3 Das p steht für den Binärexponent
+
+Regex
+Dezimal wie Python plus optional f F d D
+Hex ^0[xX]0-9A-Fa-f
+(.
+)?[pP][+-]?\d(_?\d)*[fFdD]?$
+
+DFA
+Es gibt zwei Automaten einen für Dezimalzahlen und einen für Hexzahlen Beide prüfen ob die Zahl richtig geschrieben ist
+
+Grammatik
+S→SD | SH
+SD wie bei Python plus Suffix f F d D
+SH→0xHXPEXP(Suffix)
+
+Beispiele
+2. und 0x0.C9p2f sind gültig
+--------------------------------------------------------------------------------------------------------
+
+
+Aufgabe 04:
+
+(a−z)+@(a−z).(a−z)  -----  ist ungeeignet, weil er nur Kleinbuchstaben erlaubt,
+der Punkt als „beliebiges Zeichen“ wirkt (müsste \. sein), nur eine Domain-Ebene zulässt (keine Subdomains),
+keine klare Regel für die TLD-Länge hat, keine Anker (^, $) nutzt (Teiltreffer möglich).
+
+Verbesserter Regex (praxisnah):
+^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$
+
+Bedeutung in Worten (sehr kurz):
+
+^ Anfang, $ Ende
+vor @: Buchstaben/Ziffern/._%+-, mind. 1 Zeichen
+nach @: Domain-Label aus Buchstaben/Ziffern/-
+(\.[…]+)+: mindestens ein Punkt-Teil (z. B. .de, .co.uk)
+Beispiele akzeptiert: test.mail+info@uni-example.de
+Nicht akzeptiert: test@mail , @mail.de , test@.de
+------------------------------------------------------------------------------------------------------------
+
+
+aufgabe 06:
+
+Alle Wörter beginnen mit a, haben mindestens ein d, können dazwischen beliebig viele b/c haben, und enden mit a oder b.
+Zwischen zwei aufeinanderfolgenden d steht immer ein c gefolgt von beliebig vielen b/c.
+
+DFA
+Zustände: Start S, A, B, C (akzeptierend), ⊗ (Senke).
+Übergänge:
+S: a→A, sonst →⊗
+A: b→A, c→A, d→B, sonst →⊗
+B: a→C, b→C, c→A, d→⊗
+C: auf a|b|c|d → ⊗ (Ende erzwingen)
+⊗: alle Zeichen bleiben in ⊗
+
+Beispiele
+akzeptiert: ada (a d a), acbcdb (a c b c d b)
+nicht akzeptiert: ab (kein d), adca (nach d fehlt a/b am Ende)
