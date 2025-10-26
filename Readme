@@ -9,3 +9,44 @@ er hat "ok" gesagt mein erster satz ist gewesen
 "es ist ein ort an den man geht wenn man sein land verlassen möchte"
 Er hat sofort gesagt "ist es der flughafen" 
 und das ist richtig gewesen
+
+-----------------------------------------------------------------------------------------------------------------
+
+Aufgabe 2:
+
+Beim 8 Queens Problem ist jede Lösung eine Reihenfolge der Zahlen von 1 bis 8. Jede Zahl zeigt, in welcher Zeile eine Dame steht.
+Dadurch gibt es keine Konflikte in Reihen oder Spalten. Beim Crossover werden passende Methoden wie PMX oder OX benutzt, damit gültige Reihenfolgen bleiben. Bei der Mutation werden zwei Positionen getauscht. 
+Die Fitness misst, wie viele Damen sich nicht angreifen. Ziel ist, alle acht Damen ohne Konflikte zu haben.
+
+Beim Landkarten Färben bekommt jedes Land eine Farbe. Eine Lösung ist eine Liste mit den Farben für die Länder A bis F. Beim Crossover werden Teile von zwei Lösungen gemischt. Bei der Mutation wird die Farbe eines Landes geändert. 
+Die Fitness bewertet, ob Nachbarn verschiedene Farben haben und ob wenige Farben benutzt werden.
+
+Für Simulated Annealing braucht man eine Startlösung, eine kleine Änderung als Nachbarschaft, eine Energiefunktion für die Konflikte und eine Temperatur, die langsam kleiner wird. 
+Schlechtere Lösungen können manchmal zufällig angenommen werden, bis eine gute oder perfekte Lösung gefunden ist.
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+Aufgabe 3:
+Im Projekt "Here’s Waldo" von Randal Olson ist eine genetische Methode benutzt worden, damit man den besten Suchweg findet und Waldo schnell entdeckt
+Die Individuen sind Reihenfolgen von Punkten gewesen also Permutationen
+Die Operatoren sind Crossover (Teilstücke tauschen) und Mutation (zwei Positionen vertauschen) gewesen
+Die Fitnessfunktion hat die Gesamtlänge des Weges gemessen. Das Ziel ist gewesen den kürzesten Weg zu finden
+
+Im "Evolution  Simulator" sind virtuelle Lebewesen durch eine genetische Entwicklung verbessert worden
+Die Individuen sind Körper mit Knochen Muskeln und einem einfachen Nervensystem gewesen.
+Die Operatoren haben diese Eigenschaften leicht verändert
+Die Fitnessfunktion hat gezeigt wie gut sich das Lebewesen bewegt hat zum Beispiel wie weit es gelaufen oder wie hoch es gesprungen ist
+
+Das Programm "American Fuzzy Lop (AFL)" hat evolutionäre Ideen für Softwaretests benutzt.
+Die Individuen sind Eingabedateien für ein Programm gewesen.
+Die Operatoren haben die Bytes verändert oder zwei Dateien gemischt.
+Die Fitnessfunktion hat gemessen ob der Test neue Programmteile erreicht oder Fehler (Crashes) gefunden hat.
+Andere Anwendungen von evolutionären Algorithmen sind gewesen
+
+Antennendesign bei der NASA Die Form der Antenne ist optimiert worden damit das Signal stark bleibt
+Stundenplan-Erstellung Die Belegung von Räumen und Zeiten ist ohne Konflikte berechnet worden
+Neurale Netze Die Struktur der Netzwerke ist automatisch verbessert worden
+Finanzplanung Geld ist optimal auf verschiedene Anlagen verteilt worden
+Computerspiele Level und Gegner sind automatisch erzeugt worden
