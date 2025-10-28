@@ -1,91 +1,99 @@
 Aufgabe 01:
 
-a + a(a + b)*a
+Wir zählen das Verhältnis zwischen a und c. Dazu merken wir uns im Stack, wie viele plus eins von a und minus zwei von c wir aktuell haben.
 
-Das bedeutet:
-Die Sprache enthält alle Wörter, die entweder
+Der Automat hat zwei Zustände.
+1- q ist der Hauptzustand, der alle Buchstaben liest. 
+2- q_c ist der Hilfszustand, um das minus zwei für ein c in zwei Schritten zu machen, weil der Automat immer nur ein Stacksymbol auf einmal ändern darf.
 
-nur aus einem einzelnen „a“ bestehen, oder mit „a“ beginnen, dann eine beliebige Folge aus a und b (auch leer) enthalten und wieder mit „a“ enden.
-Beispiele: a, aa, aba, abba, aaaa, aabbaa ......
------------------------------------------------------------------------------------------------------
+Wenn der Automat ein a liest:
+Wenn oben C liegt, entfernt er es, um ein Minus auszugleichen.
+Wenn oben A oder Z liegt, legt er ein A auf den Stack.
+
+Wenn der Automat ein b liest:
+Es passiert nichts, b wird ignoriert.
+
+Wenn der Automat ein c liest:
+Ein c zählt als minus zwei, deshalb müssen zwei Schritte gemacht werden.
+Im Zustand q:
+Wenn oben A liegt, wird A entfernt.
+Sonst, wenn oben C oder Z liegt, wird ein C auf den Stack gelegt. Danach geht der Automat in den Zustand q_c.
+Im Zustand q_c (ohne ein neues Zeichen zu lesen):
+Wenn oben A liegt, wird A entfernt.
+Sonst, wenn oben C oder Z liegt, wird ein C auf den Stack gelegt. Danach geht der Automat zurück in den Zustand q.
+
+((((    ---  Am Ende wird akzeptiert, wenn nur noch das Startsymbol Z im Stack liegt   ----   ))))
+
+Beispiel 1: bcaba
+Start mit Z.
+b hat keine Wirkung, der Stack bleibt Z.
+c bewirkt zwei Schritte, der Stack enthält CCZ.
+a entfernt ein C, der Stack ist CZ.
+b hat keine Wirkung, der Stack bleibt CZ.
+a entfernt ein C, der Stack ist wieder Z.
+Der Stack enthält nur Z, das Wort wird akzeptiert.
+
+Beispiel 2: bccac
+Start mit Z.
+b hat keine Wirkung, der Stack bleibt Z.
+c bewirkt zwei Schritte, der Stack enthält CCZ.
+c bewirkt wieder zwei Schritte, der Stack enthält CCCCZ.
+a entfernt ein C, der Stack ist CCCZ.
+c bewirkt zwei Schritte, der Stack enthält CCCCCZ.
+Am Ende ist der Stack nicht leer, das Wort wird nicht akzeptiert.
+
+--------------------------------------------------------------------------------------------------------------------------
 
 Aufgabe 03:
-Python
-In Python kann man Gleitkommazahlen mit oder ohne Nachkommastellen schreiben zum Beispiel 1.2 oder .5 oder 3e8 Das e steht für Exponent also 3 mal 10 hoch 8
 
-Regex
-^((\d(?:?\d)*)?.(\d(?:?\d))|(\d(?:_?\d)).)([eE][+-]?\d(?:?\d)*)?$|^\d(?:?\d)[eE][+-]?\d(?:_?\d)$
-Dieser Ausdruck beschreibt Zahlen mit Punkt und optionalem e oder E und erlaubt Unterstriche in Zahlen
+Die Grammatik generiert if-else-Statements einer imperativen Programmiersprache. Konkret: alle möglichen Kombinationen von verschachtelten if- und if-else-Konstrukten. Mehrdeutigkeit Ja, die Grammatik ist mehrdeutig. 
+Grund: Das klassische Dangling-Else-Problem. Bei einem Satz wie: if C1 if C2 Statement else Statement
 
-DFA
-Der Automat hat Zustände für Zahl Punkt Nachkomma und Exponent Wenn er die ganze Zahl richtig liest endet er in einem akzeptierenden Zustand
+gibt es zwei verschiedene Ableitungsbäume 
 
-Grammatik
-S→I | .D
-I→Z  (A | .D | E)
-D→Z  (D | E | ε)
-E→  (e | E) (+ | - | ε) Z (D | ε)
-Sie zeigt wie eine Zahl aufgebaut ist zum Beispiel aus Ziffern einem Punkt und eventuell einem Exponententeil
+1. Das `else` gehört zum inneren `if`:
+if C1 (if C2 Statement else Statement)
+2. Das `else` gehört zum äußeren `if`:
+if C1 (if C2 Statement) else Statement Beide Ableitungen sind nach den Produktionsregeln gültig → die Grammatik ist mehrdeutig.
 
-Beispiele
-.5 und 1.20e-3 sind gültig
-
-Java
-In Java gibt es Dezimalzahlen wie in Python aber auch Hexadezimalzahlen mit 0x am Anfang zum Beispiel 0x1.fp3 Das p steht für den Binärexponent
-
-Regex
-Dezimal wie Python plus optional f F d D
-Hex ^0[xX]0-9A-Fa-f
-(.
-)?[pP][+-]?\d(_?\d)*[fFdD]?$
-
-DFA
-Es gibt zwei Automaten einen für Dezimalzahlen und einen für Hexzahlen Beide prüfen ob die Zahl richtig geschrieben ist
-
-Grammatik
-S→SD | SH
-SD wie bei Python plus Suffix f F d D
-SH→0xHXPEXP(Suffix)
-
-Beispiele
-2. und 0x0.C9p2f sind gültig
---------------------------------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------------------------------------------------
 
 Aufgabe 04:
 
-(a−z)+@(a−z).(a−z)  -----  ist ungeeignet, weil er nur Kleinbuchstaben erlaubt,
-der Punkt als „beliebiges Zeichen“ wirkt (müsste \. sein), nur eine Domain-Ebene zulässt (keine Subdomains),
-keine klare Regel für die TLD-Länge hat, keine Anker (^, $) nutzt (Teiltreffer möglich).
 
-Verbesserter Regex (praxisnah):
-^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$
+1. KONTEXTFREIE GRAMMATIK
 
-Bedeutung in Worten (sehr kurz):
+G = ({S, X, C, A, Y}, {a, b, c}, P, S)
 
-^ Anfang, $ Ende
-vor @: Buchstaben/Ziffern/._%+-, mind. 1 Zeichen
-nach @: Domain-Label aus Buchstaben/Ziffern/-
-(\.[…]+)+: mindestens ein Punkt-Teil (z. B. .de, .co.uk)
-Beispiele akzeptiert: test.mail+info@uni-example.de
-Nicht akzeptiert: test@mail , @mail.de , test@.de
-------------------------------------------------------------------------------------------------------------
+Produktionen P:
+S → XC | AY
+X → aXb | ε
+C → cC | ε
+A → aA | ε
+Y → bYc | ε
+
+XC erzeugt a^n b^n c^k (i=j), AY erzeugt a^i b^n c^n (j=k).
+
+2. MEHRDEUTIGKEIT
+
+Ja, mehrdeutig. Wort abc hat zwei Ableitungen:
+S ⇒ XC ⇒ aXbC ⇒ abC ⇒ abc
+S ⇒ AY ⇒ aY ⇒ abYc ⇒ abc
 
 
-aufgabe 06:
+3. PUSHDOWN AUTOMAT
 
-Alle Wörter beginnen mit a, haben mindestens ein d, können dazwischen beliebig viele b/c haben, und enden mit a oder b.
-Zwischen zwei aufeinanderfolgenden d steht immer ein c gefolgt von beliebig vielen b/c.
+NPDA M = ({q₀, q₁, q₂, q₃, q₄, qf}, {a,b,c}, {Z₀,A,B}, δ, q₀, Z₀, {qf})
 
-DFA
-Zustände: Start S, A, B, C (akzeptierend), ⊗ (Senke).
-Übergänge:
-S: a→A, sonst →⊗
-A: b→A, c→A, d→B, sonst →⊗
-B: a→C, b→C, c→A, d→⊗
-C: auf a|b|c|d → ⊗ (Ende erzwingen)
-⊗: alle Zeichen bleiben in ⊗
+Übergänge δ:
+δ(q₀, ε, Z₀) = {(q₁, Z₀), (q₃, Z₀)}
 
-Beispiele
-akzeptiert: ada (a d a), acbcdb (a c b c d b)
-nicht akzeptiert: ab (kein d), adca (nach d fehlt a/b am Ende)
+Modus 1 (i=j):
+δ(q₁, a, Z₀) = (q₁, AZ₀)    δ(q₁, a, A) = (q₁, AA)
+δ(q₁, b, A)  = (q₁, ε)      δ(q₁, c, Z₀) = (q₂, Z₀)
+δ(q₂, c, Z₀) = (q₂, Z₀)     δ(q₂, ε, Z₀) = (qf, ε)
+
+Modus 2 (j=k):
+δ(q₃, a, Z₀) = (q₃, Z₀)     δ(q₃, b, Z₀) = (q₃, BZ₀)
+δ(q₃, b, B)  = (q₃, BB)     δ(q₃, c, B)  = (q₄, ε)
+δ(q₄, c, B)  = (q₄, ε)      δ(q₄, ε, Z₀) = (qf, ε)
