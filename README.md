@@ -20,3 +20,5 @@ Ich habe gelernt, wie man mit ANTLR eine eigene Sprache beschreibt und wie der P
 Außerdem habe ich besser verstanden, wie ein Pretty Printer funktioniert und warum saubere Formatierung wichtig ist. 
 Ich habe auch gelernt, geduldig und systematisch zu testen, bis der Code stabil läuft.
 
+LG
+
