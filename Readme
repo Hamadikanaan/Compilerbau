@@ -78,7 +78,7 @@ Alle Wörter beginnen mit a, haben mindestens ein d, können dazwischen beliebig
 Zwischen zwei aufeinanderfolgenden d steht immer ein c gefolgt von beliebig vielen b/c.
 
 DFA
-Zustände: Start S, A, B, C (akzeptierend), ⊗ (Senke).
+Zustände: Start S, A, B, C (akzeptierend), ⊗ (Senke) .
 Übergänge:
 S: a→A, sonst →⊗
 A: b→A, c→A, d→B, sonst →⊗
